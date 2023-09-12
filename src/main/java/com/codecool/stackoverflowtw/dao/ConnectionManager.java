@@ -8,9 +8,9 @@ import java.sql.Connection;
 
 public class ConnectionManager {
 
-    public static final String PASSWORD = "1234";
+    public static final String PASSWORD = "Katakur1";
     private final Logger logger;
-    private Connection connection;
+    private final Connection connection;
     private final String dbFile;
 
     public ConnectionManager(Logger logger, String dbFile) {

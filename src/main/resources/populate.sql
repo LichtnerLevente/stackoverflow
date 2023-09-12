@@ -1,8 +1,9 @@
 
 CREATE TABLE IF NOT EXISTS questions (
                                          question_id SERIAL PRIMARY KEY,--Serial instead of autoincrement
-                                         username TEXT NOT NULL,
-                                         question_text TEXT NOT NULL,
+                                         user_id INTEGER,
+                                         question_title TEXT NOT NULL,
+                                         question_description TEXT,
                                          question_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -10,11 +11,11 @@ CREATE TABLE IF NOT EXISTS questions (
 CREATE TABLE IF NOT EXISTS answers (
                                        answer_id SERIAL PRIMARY KEY, --Serial instead of autoincrement
                                        question_id INTEGER,
-                                       username TEXT NOT NULL,
+                                       user_id INTEGER,
                                        answer_text TEXT NOT NULL,
                                        answer_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
                                        FOREIGN KEY (question_id) REFERENCES questions(question_id)
 );
 
-INSERT INTO questions (username, question_text) VALUES ('user1', 'hello?');
-INSERT INTO answers (question_id, username, answer_text) VALUES (1, 'user2', 'szia');
+INSERT INTO questions (user_id, question_title, question_description) VALUES (0, 'hello?', 'HELLO WORLD');
+INSERT INTO answers (question_id, user_id, answer_text) VALUES (1, 0, 'szia');

@@ -1,12 +1,12 @@
 package com.codecool.stackoverflowtw.dao;
 
-import com.codecool.stackoverflowtw.dao.model.Question;
+import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
+import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
 import com.codecool.stackoverflowtw.logger.ConsoleLogger;
 import com.codecool.stackoverflowtw.logger.Logger;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -24,13 +24,16 @@ class QuestionsDaoJdbcTest {
 
     @Test
     void addQuestion() {
-        Question question = new Question(0, "asd", new Date(), null);
-        assertTrue(questionsDAO.addQuestion(question));
+        NewQuestionDTO question = new NewQuestionDTO("asd", "fdebd");
+        int id = questionsDAO.addQuestion(question);
+        System.out.println(questionsDAO.getAllQuestion().size());
+        System.out.println(id);
+        assertTrue(id > 0);
     }
 
     @Test
     void getQuestion() {
-        Question question = questionsDAO.getQuestion(1);
+        QuestionDTO question = questionsDAO.getQuestion(1);
         assertNotNull(question);
 //        System.out.println(question.getQuestion());
 //        System.out.println(question.getDate());
@@ -39,8 +42,8 @@ class QuestionsDaoJdbcTest {
 
     @Test
     void getAllQuestion() {
-        List<Question> questions = questionsDAO.getAllQuestion();
-        for (Question question : questions) {
+        List<QuestionDTO> questions = questionsDAO.getAllQuestion();
+        for (QuestionDTO question : questions) {
             assertNotNull(question);
 //            System.out.println(question.getQuestion() + " " + question.getId());
         }

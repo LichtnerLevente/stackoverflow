@@ -20,23 +20,20 @@ public class QuestionService {
     }
 
     public List<QuestionDTO> getAllQuestions() {
-        // TODO
-        return List.of(new QuestionDTO(1, "example title", "example desc", LocalDateTime.now()));
+        return questionsDAO.getAllQuestion();
     }
 
     public QuestionDTO getQuestionById(int id) {
-        // TODO
-        questionsDAO.sayHi();
-        return new QuestionDTO(id, "example title", "example desc", LocalDateTime.now());
+        return questionsDAO.getQuestion(id);
     }
 
     public boolean deleteQuestionById(int id) {
-        // TODO
-        return false;
+        return questionsDAO.deleteQuestion(id);
     }
 
     public int addNewQuestion(NewQuestionDTO question) {
-        // TODO
+        questionsDAO.addQuestion(question);
+
         int createdId = 0;
         return createdId;
     }

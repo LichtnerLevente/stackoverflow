@@ -25,11 +25,12 @@ public class QuestionController {
 
     @GetMapping("/{id}")
     public QuestionDTO getQuestionById(@PathVariable int id) {
-        return null;
+        return questionService.getQuestionById(id);
     }
 
     @PostMapping("/")
     public int addNewQuestion(@RequestBody NewQuestionDTO question) {
+//        questionService.addNewQuestion();
         return 0;
     }
 

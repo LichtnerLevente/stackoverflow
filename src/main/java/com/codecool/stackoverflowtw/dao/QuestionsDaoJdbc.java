@@ -1,69 +1,57 @@
 package com.codecool.stackoverflowtw.dao;
 
+import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
+import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
 import com.codecool.stackoverflowtw.dao.model.Question;
 import com.codecool.stackoverflowtw.logger.Logger;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionsDaoJdbc implements QuestionsDAO {
-    public static final String PASSWORD = "Katakur1";
     private final Logger logger;
     private final Connection connection;
-    private final String dbFile;
+    private final AnswersDAO answersDAO;
 
     public QuestionsDaoJdbc(Logger logger, String dbFile) {
         this.logger = logger;
-        this.dbFile = dbFile;
-        this.connection = getConnection();
-    }
-
-    private Connection getConnection() {
-        Connection connection;
-        try {
-            String url = "jdbc:postgresql:" + dbFile;
-            connection = DriverManager.getConnection(url, "postgres", PASSWORD);
-
-            logger.logInfo("Connection to Postgres has been established.");
-
-            return connection;
-
-        } catch (SQLException e) {
-            logger.logError(e.getMessage());
-        }
-        return null;
+        ConnectionManager connectionManager = new ConnectionManager(logger, dbFile);
+        this.connection = connectionManager.getConnection();
+        this.answersDAO = new AnswersDaoJdbc(connectionManager, logger);
     }
 
     @Override
-    public boolean addQuestion(Question question) {
-        String sql = "INSERT INTO questions(username, question_text) VALUES(?, ?)";
+    public int addQuestion(NewQuestionDTO question) {
+        String sql = "INSERT INTO questions(question_title, question_description) VALUES(?, ?) RETURNING question_id";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, "");
-            preparedStatement.setString(2, question.getQuestion());
-            preparedStatement.executeUpdate();
-            logger.logInfo("New Question Added");
-            return true;
+            preparedStatement.setString(1, question.title());
+            preparedStatement.setString(2, question.description());
+            ResultSet result = preparedStatement.executeQuery();
+            if (result.next()) {
+                logger.logInfo("New Question Added");
+                return result.getInt("question_id");
+            }
         } catch (SQLException e) {
             logger.logError(e.getMessage());
         }
-        return false;
+        return -1;
     }
 
     @Override
-    public Question getQuestion(int id) {
+    public QuestionDTO getQuestion(int id) {
         String sql = "SELECT * FROM questions WHERE question_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
-                return new Question(id,
-                        result.getString("question_text"),
-                        result.getDate("question_date"),
-//                        LocalDateTime.parse(result.getString("question_date")),
-                        null);
+                return new QuestionDTO(
+                        id,
+                        result.getString("question_title"),
+                        result.getString("question_description"),
+                        result.getDate("question_date")
+                );
             }
         } catch (SQLException e) {
             logger.logError(e.getMessage());
@@ -72,17 +60,17 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     }
 
     @Override
-    public List<Question> getAllQuestion() {
+    public List<QuestionDTO> getAllQuestion() {
         String sql = "SELECT * FROM questions";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet result = preparedStatement.executeQuery();
-            List<Question> questions = new ArrayList<>();
+            List<QuestionDTO> questions = new ArrayList<>();
             while (result.next()) {
-                questions.add(new Question(
+                questions.add(new QuestionDTO(
                         result.getInt("question_id"),
-                        result.getString("question_text"),
-                        result.getDate("question_date"),
-                        null
+                        result.getString("question_title"),
+                        result.getString("question_description"),
+                        result.getDate("question_date")
                 ));
             }
             return questions;
@@ -93,7 +81,17 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     }
 
     @Override
-    public boolean updateQuestion(Question question) {
+    public boolean updateQuestion(QuestionDTO question) {
+        String sql = "UPDATE questions SET  question_title = ?, question_description = ? WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, question.title());
+            preparedStatement.setString(2, question.description());
+            preparedStatement.setInt(3, question.id());
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            logger.logError(e.getMessage());
+        }
         return false;
     }
 
@@ -102,6 +100,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
         String sql = "DELETE FROM questions WHERE question_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
+            answersDAO.deleteAnswers(id);
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -114,6 +113,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     public boolean deleteALLQuestion() {
         String sql = "DELETE FROM questions";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            answersDAO.deleteALLAnswer();
             preparedStatement.executeUpdate();
             logger.logInfo("All Questions Deleted");
             return true;

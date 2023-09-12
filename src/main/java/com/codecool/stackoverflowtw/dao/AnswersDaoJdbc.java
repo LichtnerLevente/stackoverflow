@@ -1,14 +1,12 @@
 package com.codecool.stackoverflowtw.dao;
 
 import com.codecool.stackoverflowtw.dao.model.Answer;
-import com.codecool.stackoverflowtw.dao.model.Question;
 import com.codecool.stackoverflowtw.logger.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 
 public class AnswersDaoJdbc implements  AnswersDAO {
@@ -55,9 +53,6 @@ public class AnswersDaoJdbc implements  AnswersDAO {
         return null;
     }
 
-
-
-
     @Override
     public List<Answer> getAllAnswer() {
         return null;
@@ -69,7 +64,12 @@ public class AnswersDaoJdbc implements  AnswersDAO {
     }
 
     @Override
-    public boolean deleteAnswer(Answer answer) {
+    public boolean deleteAnswer(int id) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteAnswers(int questionId) {
         return false;
     }
 
