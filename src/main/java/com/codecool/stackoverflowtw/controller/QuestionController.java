@@ -30,12 +30,12 @@ public class QuestionController {
 
     @PostMapping("/")
     public int addNewQuestion(@RequestBody NewQuestionDTO question) {
-//        questionService.addNewQuestion();
+        questionService.addNewQuestion(question);
         return 0;
     }
 
     @DeleteMapping("/{id}")
     public boolean deleteQuestionById(@PathVariable int id) {
-        return false;
+        return questionService.deleteQuestionById(id);
     }
 }

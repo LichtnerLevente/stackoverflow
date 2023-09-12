@@ -32,9 +32,7 @@ public class QuestionService {
     }
 
     public int addNewQuestion(NewQuestionDTO question) {
-        questionsDAO.addQuestion(question);
+        return questionsDAO.addQuestion(question);
 
-        int createdId = 0;
-        return createdId;
     }
 }
