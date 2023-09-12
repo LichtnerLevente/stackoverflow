@@ -30,7 +30,5 @@ class QuestionsDaoJdbcTest {
     void getQuestion() {
         Question question = questionsDAO.getQuestion(1);
         assertNotNull(question);
-        s
-
     }
 }

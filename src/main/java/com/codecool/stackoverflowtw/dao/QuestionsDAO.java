@@ -11,5 +11,5 @@ public interface QuestionsDAO {
     boolean updateQuestion(Question question);
     boolean deleteQuestion(int id);
     boolean deleteALLQuestion();
-    void sayHi();
+
 }
