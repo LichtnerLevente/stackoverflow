@@ -11,7 +11,9 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 class QuestionsDaoJdbcTest {
-    static QuestionsDAO questionsDAO;
+    private static QuestionsDAO questionsDAO;
+    private final Logger logger = new ConsoleLogger();
+
 
     @BeforeAll
     static void beforeAll() {
@@ -22,5 +24,12 @@ class QuestionsDaoJdbcTest {
     void addQuestion() {
         Question question = new Question(0, "asd", LocalDate.now(), null);
         assertTrue(questionsDAO.addQuestion(question));
+    }
+
+    @Test
+    void getQuestion() {
+        Question question = questionsDAO.getQuestion(1);
+        assertNotNull(question);
+
     }
 }
