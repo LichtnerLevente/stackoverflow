@@ -1,7 +1,9 @@
 package com.codecool.stackoverflowtw.dao.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Question {
@@ -9,10 +11,10 @@ public class Question {
 
     private String question;
 
-    private final LocalDate date;
+    private final Date date;
     private final List<Answer> answers = new ArrayList<>();
     private final User user;
-    public Question(int id, String question, LocalDate date, User user) {
+    public Question(int id, String question, Date date, User user) {
         this.id = id;
         this.question = question;
         this.date = date;
@@ -29,7 +31,7 @@ public class Question {
         return question;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
