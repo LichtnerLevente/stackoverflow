@@ -83,9 +83,11 @@ public class AnswersDaoJdbc implements  AnswersDAO {
             pstmt.setInt(2,answer.getId());
             pstmt.executeUpdate();
             logger.logInfo("Answer updated");
+            return true;
         } catch (SQLException e) {
             logger.logError(e.getMessage());
         }
+        return false;
     }
 
     @Override
