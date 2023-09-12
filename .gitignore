@@ -27,3 +27,5 @@ target/
 .idea/
 /mvnw
 /mvnw.cmd
+/src/main/resources/stackoverflow.db
+/src/main/resources/stackoverflow.db-journal
