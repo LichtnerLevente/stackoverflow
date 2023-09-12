@@ -5,9 +5,25 @@ import java.util.Date;
 public class Answer {
     private final int id;
     private String answer;
-    private  String username;
-    private  int questionId;
+    private final User user;
+    private final int questionId;
     private final Date date;
+
+    public Answer(int id, String answer, User user, int questionId, Date date) {
+        this.id = id;
+        this.answer = answer;
+        this.user = user;
+        this.questionId = questionId;
+        this.date = date;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public int getQuestionId() {
+        return questionId;
+    }
 
     public int getId() {
         return id;
@@ -30,11 +46,5 @@ public class Answer {
         return date;
     }
 
-    public Answer(int id, String answer, String username, int questionId, Date date) {
-        this.id = id;
-        this.answer = answer;
-        this.username = username;
-        this.questionId = questionId;
-        this.date = date;
-    }
+
 }
