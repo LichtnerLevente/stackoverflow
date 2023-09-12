@@ -68,11 +68,12 @@ public class AnswersDaoJdbc implements  AnswersDAO {
                        result.getInt("question_id"),
                        result.getDate("answer_date")
                ));
+               return answers;
            }
         }catch (SQLException e){
              logger.logError(e.getMessage());
         }
-
+        return null;
     }
 
     @Override
