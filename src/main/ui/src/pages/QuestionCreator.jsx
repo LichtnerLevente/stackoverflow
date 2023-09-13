@@ -3,7 +3,7 @@ import {QuestionForm} from "../components/QuestionForm";
 import {useState} from "react";
 
 const createQuestion = (questionDTO) => {
-    return fetch("http://localhost:8080/create", {
+    return fetch("http://localhost:8080/questions/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
