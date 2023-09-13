@@ -21,11 +21,6 @@ export const QuestionTable = ({questions, onDelete}) => {
                             </Link>
                         </td>
                         <td>
-                            <Link to={`/edit/${question.id}`}>
-                                <button disabled={true} type="button">Edit</button>
-                            </Link>
-                        </td>
-                        <td>
                             <button disabled={true} type="button" onClick={() => onDelete(question.id)}>
                                 Delete
                             </button>

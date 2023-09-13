@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import {Layout} from "./pages/Layout";
 import {QuestionList} from "./pages/QuestionList";
 import {QuestionDetails} from "./pages/QuestionDetails";
+import {QuestionCreator} from "./pages/QuestionCreator";
 
 const router = createBrowserRouter([
     {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
             {
                 path: "/question/:id",
                 element: <QuestionDetails/>,
+            },
+            {
+                path:"/create",
+                element: <QuestionCreator/>
             }
 
         ]
