@@ -25,6 +25,7 @@ hs_err_pid*
 *.iml
 target/
 .idea/
+/node_modules
 /mvnw
 /mvnw.cmd
 /src/main/resources/stackoverflow.db
