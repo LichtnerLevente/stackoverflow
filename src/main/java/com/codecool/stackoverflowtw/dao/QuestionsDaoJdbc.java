@@ -2,6 +2,7 @@ package com.codecool.stackoverflowtw.dao;
 
 import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
+import com.codecool.stackoverflowtw.dao.model.Question;
 import com.codecool.stackoverflowtw.logger.Logger;
 
 import java.sql.Connection;
@@ -41,17 +42,18 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     }
 
     @Override
-    public QuestionDTO getQuestion(int id) {
+    public Question getQuestion(int id) {
         String sql = "SELECT * FROM questions WHERE question_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
-                return new QuestionDTO(
+                return new Question(
                         id,
                         result.getString("question_title"),
                         result.getString("question_description"),
-                        result.getDate("question_date")
+                        result.getDate("question_date"),
+                        null
                 );
             }
         } catch (SQLException e) {
@@ -61,17 +63,18 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     }
 
     @Override
-    public List<QuestionDTO> getAllQuestion() {
+    public List<Question> getAllQuestion() {
         String sql = "SELECT * FROM questions";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet result = preparedStatement.executeQuery();
-            List<QuestionDTO> questions = new ArrayList<>();
+            List<Question> questions = new ArrayList<>();
             while (result.next()) {
-                questions.add(new QuestionDTO(
+                questions.add(new Question(
                         result.getInt("question_id"),
                         result.getString("question_title"),
                         result.getString("question_description"),
-                        result.getDate("question_date")
+                        result.getDate("question_date"),
+                        null
                 ));
             }
             return questions;
@@ -82,12 +85,12 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     }
 
     @Override
-    public boolean updateQuestion(QuestionDTO question) {
+    public boolean updateQuestion(Question question) {
         String sql = "UPDATE questions SET  question_title = ?, question_description = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, question.title());
-            preparedStatement.setString(2, question.description());
-            preparedStatement.setInt(3, question.id());
+            preparedStatement.setString(1, question.getQuestionTitle());
+            preparedStatement.setString(2, question.getQuestionDescription());
+            preparedStatement.setInt(3, question.getId());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {

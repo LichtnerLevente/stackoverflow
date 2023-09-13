@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface QuestionsDAO {
     int addQuestion(NewQuestionDTO question);
-    QuestionDTO getQuestion(int id);
-    List<QuestionDTO> getAllQuestion();
-    boolean updateQuestion(QuestionDTO question);
+    Question getQuestion(int id);
+    List<Question> getAllQuestion();
+    boolean updateQuestion(Question question);
     boolean deleteQuestion(int id);
     boolean deleteALLQuestion();
 
