@@ -16,12 +16,12 @@ export const QuestionTable = ({questions, onDelete}) => {
                     <tr key={question.id}>
                         <td>{question.title}</td>
                         <td>
-                            <Link to={`/details/${question.id}`}>
-                                <button disabled={true} type="button">Details</button>
+                            <Link to={`/questions/${question.id}`}>
+                                <button disabled={false} type="button">Details</button>
                             </Link>
                         </td>
                         <td>
-                            <button disabled={true} type="button" onClick={() => onDelete(question.id)}>
+                            <button disabled={false} type="button" onClick={() => onDelete(question.id)}>
                                 Delete
                             </button>
                         </td>

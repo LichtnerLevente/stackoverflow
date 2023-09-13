@@ -5,7 +5,7 @@ const fetchQuestions = () => {
     return fetch("http://localhost:8080/questions/all").then((res) => res.json());
 }
 const deleteQuestion = (id) => {
-    return fetch(String.format("http://localhost:8080/questions/%d", id), {method: "DELETE"})
+    return fetch(`http://localhost:8080/questions/${id}`, {method: "DELETE"})
         .then(res => res.json());
 };
 
@@ -16,15 +16,18 @@ export const QuestionList = () => {
 
     const [loading, setLoading] = useState(true);
 
-    function handleDelete(id) {
-
+    function handleDelete(idString) {
+        let id = parseInt(idString);
+        deleteQuestion(id).then(res =>{
+            console.log(res);
+        })
+        setQuestions(questions.filter(q => q.id !== id));
     }
 
 
     useEffect(() => {
         fetchQuestions().then(questions => {
             console.log(questions)
-            // let questionsArray = questions.keys();
             setQuestions(questions);
             setLoading(false)
         })
@@ -35,8 +38,7 @@ export const QuestionList = () => {
     } else {
         console.log(questions);
         return (
-            // <div>asd</div>
-            <QuestionTable questions={questions} onDelete={handleDelete()}/>
+            <QuestionTable questions={questions} onDelete={handleDelete}/>
         )
     }
 }

@@ -19,7 +19,7 @@ const router = createBrowserRouter([
                 element: <QuestionList/>,
             },
             {
-                path: "/question/:id",
+                path: "/questions/:id",
                 element: <QuestionDetails/>,
             },
             {
