@@ -9,19 +9,17 @@ public class Question {
 
     private String questionTitle;
 
-
-
     private  String questionDescription;
 
     private final Date date;
     private final List<Answer> answers = new ArrayList<>();
-    private final User user;
-    public Question(int id, String questionTitle, String questionDescription, Date date, User user) {
+    private final Integer userId ; // CHANGE
+    public Question(int id, String questionTitle, String questionDescription, Date date, Integer userId) {
         this.id = id;
         this.questionTitle = questionTitle;
         this.questionDescription = questionDescription;
         this.date = date;
-        this.user = user;
+        this.userId = userId;
     }
     public void setQuestionTitle(String questionTitle) {
         this.questionTitle = questionTitle;
@@ -44,8 +42,8 @@ public class Question {
         return answers;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUserId() {
+        return userId;
     }
 
 
