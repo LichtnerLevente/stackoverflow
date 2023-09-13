@@ -1,8 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+export default class Layout {
+}
+import Layout from ""
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <Layout />,
+    }
+])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
