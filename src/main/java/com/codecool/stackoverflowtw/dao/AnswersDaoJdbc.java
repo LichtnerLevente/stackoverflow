@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AnswersDaoJdbc implements  AnswersDAO {
@@ -42,7 +43,7 @@ public class AnswersDaoJdbc implements  AnswersDAO {
             ResultSet result = preparedStatement.executeQuery();
             if(result.first()){
                 return new Answer(id,result.getString("answer_text"),
-                        result.getString("username"),
+                        null,
                         result.getInt("question_id"),
                         result.getDate("answer_date")
                         );
@@ -55,26 +56,78 @@ public class AnswersDaoJdbc implements  AnswersDAO {
 
     @Override
     public List<Answer> getAllAnswer() {
+        String sql ="SELECT * FROM answers";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+           ResultSet result = preparedStatement.executeQuery();
+           List<Answer> answers = new ArrayList<>();
+           while (result.next()){
+               answers.add(new Answer(
+                       result.getInt("answer_id"),
+                       result.getString("answer_text"),
+                       null,
+                       result.getInt("question_id"),
+                       result.getDate("answer_date")
+               ));
+               return answers;
+           }
+        }catch (SQLException e){
+             logger.logError(e.getMessage());
+        }
         return null;
     }
 
     @Override
     public boolean updateAnswer(Answer answer, String modifiedAnswer) {
+        String sql = "UPGRADE answer SET answer_text = ? WHERE answer_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, modifiedAnswer);
+            pstmt.setInt(2,answer.getId());
+            pstmt.executeUpdate();
+            logger.logInfo("Answer updated");
+            return true;
+        } catch (SQLException e) {
+            logger.logError(e.getMessage());
+        }
         return false;
     }
 
     @Override
-    public boolean deleteAnswer(int id) {
+    public boolean deleteAnswer(int answerId) {
+        String sql = "DELETE FROM answers WHERE answer_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, answerId);
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            logger.logError(e.getMessage());
+        }
         return false;
+
     }
 
     @Override
-    public boolean deleteAnswers(int questionId) {
+    public boolean deleteAnswerForQuestion(int questionId) {
+        String sql = "DELETE FROM answers WHERE question_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, questionId);
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            logger.logError(e.getMessage());
+        }
         return false;
     }
 
     @Override
     public boolean deleteALLAnswer() {
+        String sql = "DELETE FROM answers";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.executeUpdate();
+            logger.logInfo("All Answers Deleted");
+            return true;
+        } catch (SQLException e) {
+            logger.logError(e.getMessage());
+        }
         return false;
     }
 }

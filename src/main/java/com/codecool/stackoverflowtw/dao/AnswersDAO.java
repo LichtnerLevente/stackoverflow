@@ -10,7 +10,7 @@ public interface AnswersDAO {
     Answer getAnswer(int id);
     List<Answer> getAllAnswer();
     boolean updateAnswer(Answer answer,String modifiedAnswer);
-    boolean deleteAnswer(int id);
-    boolean deleteAnswers(int questionId);
+    boolean deleteAnswer(int answerId);
+    boolean deleteAnswerForQuestion(int questionId);
     boolean deleteALLAnswer();
 }
