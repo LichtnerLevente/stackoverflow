@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class StackoverflowTwApplication {
     private final Logger logger = new ConsoleLogger();
-    private final String dbFile = "";
+    private final String dbFile = "//localhost:5432/stackoverflow";
 
     public static void main(String[] args) {
         SpringApplication.run(StackoverflowTwApplication.class, args);
