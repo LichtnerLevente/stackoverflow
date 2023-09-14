@@ -4,7 +4,6 @@ import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
 import com.codecool.stackoverflowtw.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -41,9 +40,7 @@ public class QuestionController {
     }
 
     @PatchMapping("/{id}/update")
-    public ResponseEntity<Boolean> updateQuestionById(@RequestBody NewQuestionDTO question, @PathVariable int id) {
-        Boolean updated = questionService.updateQuestion(question, id);
-        System.out.println(updated);
-        return ResponseEntity.ok(updated);
+    public QuestionDTO updateQuestionById(@RequestBody QuestionDTO question) {
+        return questionService.updateQuestion(question);
     }
 }

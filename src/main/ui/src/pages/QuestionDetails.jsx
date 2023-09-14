@@ -6,14 +6,14 @@ const fetchQuestion = (id) => {
     return fetch(`http://localhost:8080/questions/${id}`)
         .then(res => res.json());
 }
-const updateQuestion = (newQuestionDTO, id) => {
+const updateQuestion = (questionDTO) => {
 
-    return fetch(`http://localhost:8080/questions/${id}/update`, {
+    return fetch(`http://localhost:8080/questions/${questionDTO.id}/update`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(newQuestionDTO),
+        body: JSON.stringify(questionDTO),
     }).then(res => res.json());
 };
 const deleteQuestion = (id) => {
@@ -41,13 +41,10 @@ export const QuestionDetails = () => {
     if (loading) return <div/>;
 
 
-    function handleUpdate(question, id) {
-        updateQuestion(question, id).then(res => {
+    function handleUpdate(question) {
+        updateQuestion(question).then(res => {
+            setQuestion(res)
             setEditing(false)
-            if (res === true) {
-                setQuestion(question)
-                // console.log(question)
-            }
         })
     }
 

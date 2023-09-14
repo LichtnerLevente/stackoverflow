@@ -10,9 +10,10 @@ export const QuestionForm = ({question, onSave, onCancel, disabled}) => {
 
         if (question) {
             return onSave({
+                ...question,
                 title,
                 description,
-            }, question.id)
+            })
         }
         return onSave({
             title,
