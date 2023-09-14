@@ -1,7 +1,6 @@
 package com.codecool.stackoverflowtw.dao;
 
 import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
-import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
 import com.codecool.stackoverflowtw.dao.model.Question;
 import com.codecool.stackoverflowtw.logger.Logger;
 
@@ -64,7 +63,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
 
     @Override
     public List<Question> getAllQuestion() {
-        String sql = "SELECT * FROM questions";
+        String sql = "SELECT * FROM questions ORDER BY question_date DESC";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet result = preparedStatement.executeQuery();
             List<Question> questions = new ArrayList<>();
@@ -85,18 +84,27 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     }
 
     @Override
-    public boolean updateQuestion(Question question) {
-        String sql = "UPDATE questions SET  question_title = ?, question_description = ? WHERE id = ?";
+    public Question updateQuestion(Question question) {
+        String sql = "UPDATE questions SET  question_title = ?, question_description = ? WHERE question_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, question.getQuestionTitle());
             preparedStatement.setString(2, question.getQuestionDescription());
             preparedStatement.setInt(3, question.getId());
             preparedStatement.executeUpdate();
-            return true;
+
+            return
+                    new Question(
+                            question.getId(),
+                            question.getQuestionTitle(),
+                            question.getQuestionDescription(),
+                            question.getDate(),
+                            null
+                    );
+
         } catch (SQLException e) {
             logger.logError(e.getMessage());
         }
-        return false;
+        return null;
     }
 
     @Override

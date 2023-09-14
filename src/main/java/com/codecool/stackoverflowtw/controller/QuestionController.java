@@ -6,6 +6,7 @@ import com.codecool.stackoverflowtw.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class QuestionController {
 
     @GetMapping("/all")
     public List<QuestionDTO> getAllQuestions() {
-        return questionService.getAllQuestions();
+        return new ArrayList<>(questionService.getAllQuestions());
     }
 
     @GetMapping("/{id}")
@@ -36,5 +37,10 @@ public class QuestionController {
     @DeleteMapping("/{id}")
     public boolean deleteQuestionById(@PathVariable int id) {
         return questionService.deleteQuestionById(id);
+    }
+
+    @PatchMapping("/{id}/update")
+    public QuestionDTO updateQuestionById(@RequestBody QuestionDTO question) {
+        return questionService.updateQuestion(question);
     }
 }

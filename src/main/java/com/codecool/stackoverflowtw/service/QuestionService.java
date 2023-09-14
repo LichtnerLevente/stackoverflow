@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class QuestionService {
 
-    private QuestionsDAO questionsDAO;
+    private final QuestionsDAO questionsDAO;
 
     @Autowired
     public QuestionService(QuestionsDAO questionsDAO) {
@@ -23,7 +23,7 @@ public class QuestionService {
     public List<QuestionDTO> getAllQuestions() {
         List<QuestionDTO> questions = new ArrayList<>();
 
-        questionsDAO.getAllQuestion().forEach(question ->  {
+        questionsDAO.getAllQuestion().forEach(question -> {
             questions.add(new QuestionDTO(
                     question.getId(),
                     question.getQuestionTitle(),
@@ -50,6 +50,17 @@ public class QuestionService {
 
     public int addNewQuestion(NewQuestionDTO question) {
         return questionsDAO.addQuestion(question);
+    }
 
+    public QuestionDTO updateQuestion(QuestionDTO question) {
+        Question response = questionsDAO.updateQuestion(
+                new Question(
+                        question.id(),
+                        question.title(),
+                        question.description(),
+                        question.created(),
+                        null
+                ));
+        return new QuestionDTO(response.getId(), response.getQuestionTitle(), response.getQuestionDescription(), response.getDate());
     }
 }
