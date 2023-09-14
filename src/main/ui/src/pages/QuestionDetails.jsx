@@ -16,7 +16,10 @@ const updateQuestion = (newQuestionDTO, id) => {
         body: JSON.stringify(newQuestionDTO),
     }).then(res => res.json());
 };
-
+const deleteQuestion = (id) => {
+    return fetch(`http://localhost:8080/questions/${id}`, {method: "DELETE"})
+        .then(res => res.json());
+};
 export const QuestionDetails = () => {
 
     const {id} = useParams();
@@ -48,7 +51,13 @@ export const QuestionDetails = () => {
         })
     }
 
-    function onDelete(id) {
+    function handleDelete(idString) {
+        let id = parseInt(idString);
+        deleteQuestion(id).then(deleted => {
+            if (deleted) {
+                navigate("/");
+            }
+        })
     }
 
     function handleCancel() {
@@ -73,7 +82,7 @@ export const QuestionDetails = () => {
                 <button type="button" disabled={editing} onClick={() => setEditing(true)}>
                     Edit
                 </button>
-                <button disabled={editing} type="button" onClick={() => onDelete(question.id)}>
+                <button disabled={editing} type="button" onClick={() => handleDelete(question.id)}>
                     Delete
                 </button>
             </div>
