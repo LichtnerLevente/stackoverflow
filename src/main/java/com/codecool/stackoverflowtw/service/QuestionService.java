@@ -24,24 +24,13 @@ public class QuestionService {
         List<QuestionDTO> questions = new ArrayList<>();
 
         questionsDAO.getAllQuestion().forEach(question -> {
-            questions.add(new QuestionDTO(
-                    question.getId(),
-                    question.getQuestionTitle(),
-                    question.getQuestionDescription(),
-                    question.getDate()
-            ));
+            questions.add(new QuestionDTO(question));
         });
         return questions;
     }
 
     public QuestionDTO getQuestionById(int id) {
-        Question question = questionsDAO.getQuestion(id);
-        return new QuestionDTO(
-                question.getId(),
-                question.getQuestionTitle(),
-                question.getQuestionDescription(),
-                question.getDate()
-        );
+        return new QuestionDTO(questionsDAO.getQuestion(id));
     }
 
     public boolean deleteQuestionById(int id) {
@@ -52,15 +41,7 @@ public class QuestionService {
         return questionsDAO.addQuestion(question);
     }
 
-    public QuestionDTO updateQuestion(QuestionDTO question) {
-        Question response = questionsDAO.updateQuestion(
-                new Question(
-                        question.id(),
-                        question.title(),
-                        question.description(),
-                        question.created(),
-                        null
-                ));
-        return new QuestionDTO(response.getId(), response.getQuestionTitle(), response.getQuestionDescription(), response.getDate());
+    public QuestionDTO updateQuestion(Question question) {
+        return new QuestionDTO(questionsDAO.updateQuestion(question));
     }
 }

@@ -1,5 +1,7 @@
 package com.codecool.stackoverflowtw.dao.model;
 
+import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
+
 import java.util.Date;
 
 public class Question {
@@ -7,7 +9,7 @@ public class Question {
 
     private String questionTitle;
 
-    private  String questionDescription;
+    private String questionDescription;
 
     private final Date date;
     private final Integer userId;
@@ -18,6 +20,13 @@ public class Question {
         this.questionDescription = questionDescription;
         this.date = date;
         this.userId = userId;
+    }
+    public Question(QuestionDTO questionDTO) {
+        this.id = questionDTO.id();
+        this.questionTitle = questionDTO.title();
+        this.questionDescription = questionDTO.description();
+        this.date = questionDTO.created();
+        this.userId = questionDTO.userId();
     }
 
     public int getId() {
