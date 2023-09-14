@@ -16,6 +16,14 @@ CREATE TABLE IF NOT EXISTS answers (
                                        answer_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
                                        FOREIGN KEY (question_id) REFERENCES questions(question_id)
 );
+CREATE TABLE IF NOT EXISTS users (
+        user_id SERIAL PRIMARY KEY,
+        user_name TEXT NOT NULL,
+        user_password TEXT NOT NULL,
+        answer_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
 
 INSERT INTO questions (user_id, question_title, question_description) VALUES (0, 'hello?', 'HELLO WORLD');
 INSERT INTO answers (question_id, user_id, answer_text) VALUES (1, 0, 'szia');
+INSERT INTO users (user_name, user_password) VALUES ('Sanyi', 'swordfish');
