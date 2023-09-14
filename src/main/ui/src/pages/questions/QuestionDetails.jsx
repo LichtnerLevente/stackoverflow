@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {QuestionForm} from "../components/QuestionForm";
+import {QuestionForm} from "../../components/QuestionForm";
 
 const fetchQuestion = (id) => {
     return fetch(`http://localhost:8080/questions/${id}`)

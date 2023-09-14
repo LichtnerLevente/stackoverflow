@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom";
-import {QuestionForm} from "../components/QuestionForm";
+import {QuestionForm} from "../../components/QuestionForm";
 import {useState} from "react";
 
 const createQuestion = (newQuestionDTO) => {

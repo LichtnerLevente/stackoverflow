@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {QuestionTable} from "../components/QuestionTable";
+import {QuestionTable} from "../../components/QuestionTable";
 
 const fetchQuestions = () => {
     return fetch("http://localhost:8080/questions/all").then((res) => res.json());

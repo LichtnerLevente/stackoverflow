@@ -5,9 +5,9 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 import {Layout} from "./pages/Layout";
-import {QuestionList} from "./pages/QuestionList";
-import {QuestionDetails} from "./pages/QuestionDetails";
-import {QuestionCreator} from "./pages/QuestionCreator";
+import {QuestionList} from "./pages/questions/QuestionList";
+import {QuestionDetails} from "./pages/questions/QuestionDetails";
+import {QuestionCreator} from "./pages/questions/QuestionCreator";
 
 const router = createBrowserRouter([
     {
