@@ -1,8 +1,6 @@
 package com.codecool.stackoverflowtw.dao.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Question {
     private final int id;
@@ -12,19 +10,22 @@ public class Question {
     private  String questionDescription;
 
     private final Date date;
-    private final List<Answer> answers = new ArrayList<>();
-    private final User user;
+    private final Integer userId;
 
-    public Question(int id, String questionTitle, String questionDescription, Date date, User user) {
+    public Question(int id, String questionTitle, String questionDescription, Date date, Integer userId) {
         this.id = id;
         this.questionTitle = questionTitle;
         this.questionDescription = questionDescription;
         this.date = date;
-        this.user = user;
+        this.userId = userId;
     }
 
     public int getId() {
         return id;
+    }
+
+    public Integer getUserId() {
+        return userId;
     }
 
     public String getQuestionTitle() {
@@ -37,9 +38,5 @@ public class Question {
 
     public Date getDate() {
         return date;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 }
