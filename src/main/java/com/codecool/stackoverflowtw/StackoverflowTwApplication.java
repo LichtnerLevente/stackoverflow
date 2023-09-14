@@ -11,7 +11,8 @@ import org.springframework.context.annotation.Bean;
 public class StackoverflowTwApplication {
     private final Logger logger = new ConsoleLogger();
     private final String dbFile = "//localhost:5432/stackoverflow";
-    private  final ConnectionManager connectionManager = new ConnectionManager(logger,dbFile);
+    private final ConnectionManager connectionManager = new ConnectionManager(logger, dbFile);
+
     public static void main(String[] args) {
         SpringApplication.run(StackoverflowTwApplication.class, args);
     }
@@ -22,7 +23,12 @@ public class StackoverflowTwApplication {
     }
 
     @Bean
-    public AnswersDAO answersDAO(){ return new AnswersDaoJdbc(connectionManager,logger);
+    public AnswersDAO answersDAO() {
+        return new AnswersDaoJdbc(connectionManager, logger);
+    }
+    @Bean
+    public UsersDAO usersDAO(){
+        return new UsersDaoJbdc(logger, connectionManager);
     }
 
 }

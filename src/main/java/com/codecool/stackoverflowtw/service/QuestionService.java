@@ -41,7 +41,7 @@ public class QuestionService {
         return questionsDAO.addQuestion(question);
     }
 
-    public QuestionDTO updateQuestion(Question question) {
-        return new QuestionDTO(questionsDAO.updateQuestion(question));
+    public QuestionDTO updateQuestion(QuestionDTO questionDTO) {
+        return new QuestionDTO(questionsDAO.updateQuestion(new Question(questionDTO)));
     }
 }

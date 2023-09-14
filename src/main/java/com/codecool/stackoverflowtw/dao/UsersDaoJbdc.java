@@ -1,7 +1,7 @@
-package com.codecool.stackoverflowtw.dao.model;
+package com.codecool.stackoverflowtw.dao;
 
 import com.codecool.stackoverflowtw.controller.dto.NewUserDTO;
-import com.codecool.stackoverflowtw.dao.ConnectionManager;
+import com.codecool.stackoverflowtw.dao.model.User;
 import com.codecool.stackoverflowtw.logger.Logger;
 
 import java.sql.Connection;
@@ -11,11 +11,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoJbdc implements UserDAO {
+public class UsersDaoJbdc implements UsersDAO {
     private final Logger logger;
     private final Connection connection;
 
-    public UserDaoJbdc(Logger logger, ConnectionManager connectionManager) {
+    public UsersDaoJbdc(Logger logger, ConnectionManager connectionManager) {
         this.logger = logger;
         this.connection = connectionManager.getConnection();
     }

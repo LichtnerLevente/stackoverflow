@@ -35,4 +35,8 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    public Date getDate() {
+        return date;
+    }
 }
