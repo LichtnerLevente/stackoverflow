@@ -28,7 +28,6 @@ export const QuestionList = () => {
 
     useEffect(() => {
         fetchQuestions().then(questions => {
-            // console.log(questions)
             setQuestions(questions);
             setLoading(false)
         })

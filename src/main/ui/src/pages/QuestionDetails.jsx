@@ -7,8 +7,9 @@ const fetchQuestion = (id) => {
         .then(res => res.json());
 }
 const updateQuestion = (newQuestionDTO, id) => {
-    return fetch(`http://localhost:8080/questions/${id}`, {
-        method: "PUT",
+
+    return fetch(`http://localhost:8080/questions/${id}/update`, {
+        method: "PATCH",
         headers: {
             "Content-Type": "application/json"
         },
@@ -42,8 +43,8 @@ export const QuestionDetails = () => {
             setEditing(false)
             if (res === true) {
                 setQuestion(question)
+                // console.log(question)
             }
-            console.log(res)
         })
     }
 

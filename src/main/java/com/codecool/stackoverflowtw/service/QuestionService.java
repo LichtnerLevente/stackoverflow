@@ -49,7 +49,7 @@ public class QuestionService {
     public int addNewQuestion(NewQuestionDTO question) {
         return questionsDAO.addQuestion(question);
     }
-    public boolean updateQuestion(NewQuestionDTO question, int id){
+    public Boolean updateQuestion(NewQuestionDTO question, int id){
         return questionsDAO.updateQuestion(question, id);
     }
 }

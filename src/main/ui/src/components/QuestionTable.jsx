@@ -1,7 +1,6 @@
 import {Link} from "react-router-dom";
 
 export const QuestionTable = ({questions, onDelete}) => {
-    console.log(questions)
     return (
         <div>
             <table>
