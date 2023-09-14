@@ -11,10 +11,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnswersDaoJdbc implements  AnswersDAO {
+public class AnswersDaoJdbc implements AnswersDAO {
 
     private final Connection connection;
-    private  final Logger logger;
+    private final Logger logger;
 
     public AnswersDaoJdbc(ConnectionManager connection, Logger logger) {
         this.connection = connection.getConnection();
@@ -24,16 +24,16 @@ public class AnswersDaoJdbc implements  AnswersDAO {
     @Override
     public int addAnswer(NewAnswerDTO newAnswer) {
         String sql = "INSERT INTO answers(user_id, answer_text,question_id) VALUES(?, ?,?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.setString(1,null);
-            preparedStatement.setString(2,newAnswer.answer());
-            preparedStatement.setInt(3,newAnswer.questionId());
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, null);
+            preparedStatement.setString(2, newAnswer.answer());
+            preparedStatement.setInt(3, newAnswer.questionId());
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
                 logger.logInfo("New Answer Added");
                 return result.getInt("answer_id");
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             logger.logError(e.getMessage());
         }
         return 0;
@@ -42,17 +42,17 @@ public class AnswersDaoJdbc implements  AnswersDAO {
     @Override
     public Answer getAnswer(int id) {
         String sql = "SELECT * FROM answers WHERE question_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
-            if(result.first()){
-                return new Answer(id,result.getString("answer_text"),
+            if (result.first()) {
+                return new Answer(id, result.getString("answer_text"),
                         result.getInt("question_id"),
                         result.getDate("answer_date"),
                         result.getInt("user_id")
-                        );
+                );
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             logger.logError(e.getMessage());
         }
         return null;
@@ -60,22 +60,22 @@ public class AnswersDaoJdbc implements  AnswersDAO {
 
     @Override
     public List<Answer> getAllAnswer() {
-        String sql ="SELECT * FROM answers";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-           ResultSet result = preparedStatement.executeQuery();
-           List<Answer> answers = new ArrayList<>();
-           while (result.next()){
-               answers.add(new Answer(
-                       result.getInt("answer_id"),
-                       result.getString("answer_text"),
-                       result.getInt("question_id"),
-                       result.getDate("answer_date"),
-                       result.getInt("user_id")
-               ));
-               return answers;
-           }
-        }catch (SQLException e){
-             logger.logError(e.getMessage());
+        String sql = "SELECT * FROM answers";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet result = preparedStatement.executeQuery();
+            List<Answer> answers = new ArrayList<>();
+            while (result.next()) {
+                answers.add(new Answer(
+                        result.getInt("answer_id"),
+                        result.getString("answer_text"),
+                        result.getInt("question_id"),
+                        result.getDate("answer_date"),
+                        result.getInt("user_id")
+                ));
+            }
+            return answers;
+        } catch (SQLException e) {
+            logger.logError(e.getMessage());
         }
         return null;
     }
@@ -85,7 +85,7 @@ public class AnswersDaoJdbc implements  AnswersDAO {
         String sql = "UPGRADE answer SET answer_text = ? WHERE answer_id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, modifiedAnswer);
-            pstmt.setInt(2,answer.getId());
+            pstmt.setInt(2, answer.getId());
             pstmt.executeUpdate();
             logger.logInfo("Answer updated");
             return true;

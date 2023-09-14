@@ -24,11 +24,15 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
 
     @Override
     public int addQuestion(NewQuestionDTO question) {
-        String sql = "INSERT INTO questions(question_title, question_description) VALUES(?, ?) RETURNING question_id";
+        String sql = "INSERT INTO questions(question_title, question_description) VALUES(?, ?)";
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
             preparedStatement.setString(1, question.title());
             preparedStatement.setString(2, question.description());
-            ResultSet result = preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
+
+            ResultSet result = preparedStatement.getGeneratedKeys();
             if (result.next()) {
                 logger.logInfo("New Question Added");
                 return result.getInt("question_id");
@@ -65,6 +69,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
         String sql = "SELECT * FROM questions ORDER BY question_date DESC";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet result = preparedStatement.executeQuery();
+            System.out.println("query");
             List<Question> questions = new ArrayList<>();
             while (result.next()) {
                 questions.add(new Question(
@@ -72,9 +77,10 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
                         result.getString("question_title"),
                         result.getString("question_description"),
                         result.getDate("question_date"),
-                        null
+                        result.getInt("user_id")
                 ));
             }
+            System.out.println(questions);
             return questions;
         } catch (SQLException e) {
             logger.logError(e.getMessage());

@@ -11,7 +11,7 @@ export const QuestionTable = ({questions, onDelete}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {questions.map((question) => (
+                {questions?.map((question) => (
                     <tr key={question.id}>
                         <td>{question.title}</td>
                         <td>

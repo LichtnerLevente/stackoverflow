@@ -34,7 +34,7 @@ public class Question {
     }
 
     public Integer getUserId() {
-        return userId;
+        return userId == null ? 0 : userId;
     }
 
     public String getQuestionTitle() {

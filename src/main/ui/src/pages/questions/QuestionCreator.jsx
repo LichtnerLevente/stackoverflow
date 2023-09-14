@@ -26,6 +26,7 @@ export const QuestionCreator = () => {
                 navigate("/");
             })
     };
+    if(loading) return <div/>;
     return (
         <QuestionForm
             onSave={handleCreate}
