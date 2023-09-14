@@ -111,7 +111,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
         String sql = "DELETE FROM questions WHERE question_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
-            answersDAO.deleteAnswerForQuestion(id);
+            answersDAO.deleteAnswersForQuestion(id);
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {

@@ -18,7 +18,7 @@ public class StackoverflowTwApplication {
 
     @Bean
     public QuestionsDAO questionsDAO() {
-        return new QuestionsDaoJdbc(logger, dbFile);
+        return new QuestionsDaoJdbc(logger, connectionManager);
     }
 
     @Bean

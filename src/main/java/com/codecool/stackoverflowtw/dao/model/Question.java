@@ -42,10 +42,4 @@ public class Question {
     public List<Answer> getAnswers() {
         return answers;
     }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-
 }

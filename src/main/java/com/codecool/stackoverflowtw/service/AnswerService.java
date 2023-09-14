@@ -2,11 +2,8 @@ package com.codecool.stackoverflowtw.service;
 
 import com.codecool.stackoverflowtw.controller.dto.AnswerDTO;
 import com.codecool.stackoverflowtw.controller.dto.NewAnswerDTO;
-import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
-import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
 import com.codecool.stackoverflowtw.dao.AnswersDAO;
 import com.codecool.stackoverflowtw.dao.model.Answer;
-import com.codecool.stackoverflowtw.dao.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +48,7 @@ public class AnswerService {
 
 
         public boolean deleteAnswerById(int id) {
-            return answersDAO.deleteAnswerForQuestion(id);
+            return answersDAO.deleteAnswersForQuestion(id);
         }
 
         public int addNewAnswer(NewAnswerDTO newAnswerDTO) {

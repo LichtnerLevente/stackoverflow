@@ -9,12 +9,12 @@ public class Answer {
     private final Date date;
     private final Integer userId;
 
-    public Answer(int id, String answer, int questionId, Date date,Integer userId) {
+    public Answer(int id, String answer, int questionId, Date date, Integer userId) {
         this.id = id;
         this.answer = answer;
         this.questionId = questionId;
         this.date = date;
-        this.userId=userId;
+        this.userId = userId;
     }
 
 
@@ -32,11 +32,6 @@ public class Answer {
 
     public void setAnswer(String answer) {
         this.answer = answer;
-    }
-
-
-    public int getQuestion() {
-        return questionId;
     }
 
     public Date getDate() {
