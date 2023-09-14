@@ -16,10 +16,14 @@ class QuestionsDaoJdbcTest {
     private static QuestionsDAO questionsDAO;
     private final Logger logger = new ConsoleLogger();
 
+    private final String dbFile = "//localhost:5432/stackoverflow";
+    private  final ConnectionManager connectionManager = new ConnectionManager(logger,dbFile);
+
+
 
     @BeforeAll
-    static void beforeAll() {
-        questionsDAO = new QuestionsDaoJdbc(new ConsoleLogger(), "//localhost:5432/stackoverflow");
+     void beforeAll() {
+        questionsDAO = new QuestionsDaoJdbc(new ConsoleLogger(), connectionManager);//NOT STATIC  ANYMORE
     }
 
     @Test

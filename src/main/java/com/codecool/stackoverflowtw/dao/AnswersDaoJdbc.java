@@ -1,5 +1,6 @@
 package com.codecool.stackoverflowtw.dao;
 
+import com.codecool.stackoverflowtw.controller.dto.NewAnswerDTO;
 import com.codecool.stackoverflowtw.dao.model.Answer;
 import com.codecool.stackoverflowtw.logger.Logger;
 
@@ -21,18 +22,21 @@ public class AnswersDaoJdbc implements  AnswersDAO {
     }
 
     @Override
-    public boolean addAnswer(Answer answer) {
-        String sql = "INSERT INTO answers(username, answer_text) VALUES(?, ?)";
+    public int addAnswer(NewAnswerDTO newAnswer) {
+        String sql = "INSERT INTO answers(user_id, answer_text,question_id) VALUES(?, ?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.setString(1,"");
-            preparedStatement.setString(2,answer.getAnswer());
-            preparedStatement.executeUpdate();
-            logger.logInfo("New Answer Added");
-            return true;
+            preparedStatement.setString(1,null);
+            preparedStatement.setString(2,newAnswer.answer());
+            preparedStatement.setInt(3,newAnswer.questionId());
+            ResultSet result = preparedStatement.executeQuery();
+            if (result.next()) {
+                logger.logInfo("New Answer Added");
+                return result.getInt("answer_id");
+            }
         }catch (SQLException e){
             logger.logError(e.getMessage());
         }
-        return false;
+        return 0;
     }
 
     @Override
@@ -43,9 +47,9 @@ public class AnswersDaoJdbc implements  AnswersDAO {
             ResultSet result = preparedStatement.executeQuery();
             if(result.first()){
                 return new Answer(id,result.getString("answer_text"),
-                        null,
                         result.getInt("question_id"),
-                        result.getDate("answer_date")
+                        result.getDate("answer_date"),
+                        result.getInt("user_id")
                         );
             }
         }catch (SQLException e){
@@ -64,9 +68,9 @@ public class AnswersDaoJdbc implements  AnswersDAO {
                answers.add(new Answer(
                        result.getInt("answer_id"),
                        result.getString("answer_text"),
-                       null,
                        result.getInt("question_id"),
-                       result.getDate("answer_date")
+                       result.getDate("answer_date"),
+                       result.getInt("user_id")
                ));
                return answers;
            }

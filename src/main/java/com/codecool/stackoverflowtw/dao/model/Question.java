@@ -9,7 +9,7 @@ public class Question {
 
     private String questionTitle;
 
-    private String questionDescription;
+    private  String questionDescription;
 
     private final Date date;
     private final List<Answer> answers = new ArrayList<>();
@@ -39,8 +39,12 @@ public class Question {
         return date;
     }
 
-    public User getUser() {
-        return user;
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public Integer getUserId() {
+        return userId;
     }
 
 

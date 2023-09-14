@@ -16,9 +16,8 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     private final Connection connection;
     private final AnswersDAO answersDAO;
 
-    public QuestionsDaoJdbc(Logger logger, String dbFile) {
+    public QuestionsDaoJdbc(Logger logger, ConnectionManager connectionManager) {
         this.logger = logger;
-        ConnectionManager connectionManager = new ConnectionManager(logger, dbFile);
         this.connection = connectionManager.getConnection();
         this.answersDAO = new AnswersDaoJdbc(connectionManager, logger);
     }
