@@ -18,16 +18,17 @@ export const QuestionList = () => {
 
     function handleDelete(idString) {
         let id = parseInt(idString);
-        deleteQuestion(id).then(res =>{
-            console.log(res);
+        deleteQuestion(id).then(deleted => {
+            if (deleted) {
+                setQuestions(questions.filter(q => q.id !== id));
+            }
         })
-        setQuestions(questions.filter(q => q.id !== id));
     }
 
 
     useEffect(() => {
         fetchQuestions().then(questions => {
-            console.log(questions)
+            // console.log(questions)
             setQuestions(questions);
             setLoading(false)
         })
@@ -35,10 +36,8 @@ export const QuestionList = () => {
 
     if (loading) {
         return <div/>;
-    } else {
-        console.log(questions);
-        return (
-            <QuestionTable questions={questions} onDelete={handleDelete}/>
-        )
     }
+    return (
+        <QuestionTable questions={questions} onDelete={handleDelete}/>
+    )
 }

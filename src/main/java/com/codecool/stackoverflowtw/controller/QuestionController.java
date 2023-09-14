@@ -38,4 +38,9 @@ public class QuestionController {
     public boolean deleteQuestionById(@PathVariable int id) {
         return questionService.deleteQuestionById(id);
     }
+
+    @PutMapping("/{id}")
+    public boolean updateQuestionById(@RequestBody NewQuestionDTO question, @PathVariable int id) {
+        return questionService.updateQuestion(question, id);
+    }
 }

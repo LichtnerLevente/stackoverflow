@@ -33,7 +33,6 @@ public class QuestionService {
         });
         return questions;
     }
-
     public QuestionDTO getQuestionById(int id) {
         Question question = questionsDAO.getQuestion(id);
         return new QuestionDTO(
@@ -43,13 +42,14 @@ public class QuestionService {
                 question.getDate()
         );
     }
-
     public boolean deleteQuestionById(int id) {
         return questionsDAO.deleteQuestion(id);
     }
 
     public int addNewQuestion(NewQuestionDTO question) {
         return questionsDAO.addQuestion(question);
-
+    }
+    public boolean updateQuestion(NewQuestionDTO question, int id){
+        return questionsDAO.updateQuestion(question, id);
     }
 }

@@ -2,13 +2,13 @@ import {useNavigate} from "react-router-dom";
 import {QuestionForm} from "../components/QuestionForm";
 import {useState} from "react";
 
-const createQuestion = (questionDTO) => {
+const createQuestion = (newQuestionDTO) => {
     return fetch("http://localhost:8080/questions/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(questionDTO),
+        body: JSON.stringify(newQuestionDTO),
     }).then(res => res.json());
 };
 

@@ -85,12 +85,12 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     }
 
     @Override
-    public boolean updateQuestion(Question question) {
+    public boolean updateQuestion(NewQuestionDTO question, int id) {
         String sql = "UPDATE questions SET  question_title = ?, question_description = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, question.getQuestionTitle());
-            preparedStatement.setString(2, question.getQuestionDescription());
-            preparedStatement.setInt(3, question.getId());
+            preparedStatement.setString(1, question.title());
+            preparedStatement.setString(2, question.description());
+            preparedStatement.setInt(3, id);
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
