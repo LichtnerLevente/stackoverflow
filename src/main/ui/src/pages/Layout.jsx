@@ -1,7 +1,5 @@
 import {Link, Outlet} from "react-router-dom";
 
-import(Link)
-
 export const Layout = () => {
     return (
         <div className="Layout">
