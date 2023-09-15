@@ -28,7 +28,7 @@ const AnswerEditor = () => {
             console.log(id)
             fetchAnswer(id)
                 .then((data) => {
-                    setAnswer(data.answer);
+                    setAnswer(data);
                     setLoading(false);
                 })
                 .catch((error) => {
@@ -42,7 +42,12 @@ const AnswerEditor = () => {
         setLoading(true);
 
         if (id) {
-            const updatedAnswerDTO = { answer };
+            const editedAnswer = answer;
+            const updatedAnswerDTO = {
+                id: id,
+                answer: editedAnswer,
+                questionId: answer.questionId
+            };
             updateAnswer(updatedAnswerDTO, id)
                 .then(() => {
                     setLoading(false);
@@ -59,7 +64,7 @@ const AnswerEditor = () => {
         <div>
             <h2>Edit Answer</h2>
             <textarea
-                value={answer}
+                value={answer.answer}
                 onChange={(e) => setAnswer(e.target.value)}
             />
             <button onClick={handleSaveAnswer} disabled={loading}>
