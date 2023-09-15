@@ -46,7 +46,7 @@ const AnswerEditor = () => {
             const updatedAnswerDTO = {
                 id: id,
                 answer: editedAnswer,
-                questionId: answer.questionId
+                questionId: editedAnswer.questionId
             };
             updateAnswer(updatedAnswerDTO, id)
                 .then(() => {
