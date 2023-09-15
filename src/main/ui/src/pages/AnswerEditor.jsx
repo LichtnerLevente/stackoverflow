@@ -51,7 +51,7 @@ const AnswerEditor = () => {
             updateAnswer(updatedAnswerDTO, id)
                 .then(() => {
                     setLoading(false);
-                    navigate(`/answers/${id}`);
+                    navigate(`/`);
                 })
                 .catch((error) => {
                     console.error("Error updating answer:", error);
