@@ -8,6 +8,7 @@ import {Layout} from "./pages/Layout";
 import {QuestionList} from "./pages/QuestionList";
 import {QuestionDetails} from "./pages/QuestionDetails";
 import {QuestionCreator} from "./pages/QuestionCreator";
+import AnswerEditor from "./pages/AnswerEditor";
 
 const router = createBrowserRouter([
     {
@@ -25,7 +26,11 @@ const router = createBrowserRouter([
             {
                 path:"/create",
                 element: <QuestionCreator/>
-            }
+            },
+            {
+                path: "/answers/:id/edit",
+                element: <AnswerEditor />,
+            },
 
         ]
     }

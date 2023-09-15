@@ -23,17 +23,15 @@ public class AnswersDaoJdbc implements  AnswersDAO {
 
     @Override
     public int addAnswer(NewAnswerDTO newAnswer) {
-        String sql = "INSERT INTO answers(user_id, answer_text,question_id) VALUES(?, ?,?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.setString(1,null);
-            preparedStatement.setString(2,newAnswer.answer());
-            preparedStatement.setInt(3,newAnswer.questionId());
+        String sql = "INSERT INTO answers( answer_text, question_id) VALUES (?, ?) RETURNING * ";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, newAnswer.answer());
+            preparedStatement.setInt(2, newAnswer.questionId());
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
-                logger.logInfo("New Answer Added");
                 return result.getInt("answer_id");
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             logger.logError(e.getMessage());
         }
         return 0;
@@ -41,7 +39,7 @@ public class AnswersDaoJdbc implements  AnswersDAO {
 
     @Override
     public Answer getAnswer(int id) {
-        String sql = "SELECT * FROM answers WHERE question_id = ?";
+        String sql = "SELECT * FROM answers WHERE answer_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
@@ -59,9 +57,10 @@ public class AnswersDaoJdbc implements  AnswersDAO {
     }
 
     @Override
-    public List<Answer> getAllAnswer() {
-        String sql ="SELECT * FROM answers";
+    public List<Answer> getAllAnswersForQuestions(int questionId) {
+        String sql ="SELECT * FROM answers WHERE question_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setInt(1, questionId);
            ResultSet result = preparedStatement.executeQuery();
            List<Answer> answers = new ArrayList<>();
            while (result.next()){
@@ -72,8 +71,8 @@ public class AnswersDaoJdbc implements  AnswersDAO {
                        result.getDate("answer_date"),
                        result.getInt("user_id")
                ));
-               return answers;
            }
+            return answers;
         }catch (SQLException e){
              logger.logError(e.getMessage());
         }
@@ -81,22 +80,23 @@ public class AnswersDaoJdbc implements  AnswersDAO {
     }
 
     @Override
-    public boolean updateAnswer(Answer answer, String modifiedAnswer) {
-        String sql = "UPGRADE answer SET answer_text = ? WHERE answer_id = ?";
+    public Answer updateAnswer(Answer answer) {
+        String sql = "UPDATE answer SET answer_text = ? WHERE answer_id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, modifiedAnswer);
-            pstmt.setInt(2,answer.getId());
+            pstmt.setString(1, answer.getAnswer());
+            pstmt.setInt(2, answer.getId());
             pstmt.executeUpdate();
             logger.logInfo("Answer updated");
-            return true;
+            return answer;
         } catch (SQLException e) {
             logger.logError(e.getMessage());
         }
-        return false;
+        return null;
     }
 
+
     @Override
-    public boolean deleteAnswer(int answerId) {
+    public boolean deleteAnswerById(int answerId) {
         String sql = "DELETE FROM answers WHERE answer_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, answerId);

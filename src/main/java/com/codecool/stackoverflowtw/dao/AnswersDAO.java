@@ -8,9 +8,9 @@ import java.util.List;
 public interface AnswersDAO {
     int addAnswer(NewAnswerDTO newAnswer);
     Answer getAnswer(int id);
-    List<Answer> getAllAnswer();
-    boolean updateAnswer(Answer answer,String modifiedAnswer);
-    boolean deleteAnswer(int answerId);
+    List<Answer> getAllAnswersForQuestions(int questionId);
+    Answer updateAnswer(Answer answer);
+    boolean deleteAnswerById(int answerId);
     boolean deleteAnswersForQuestion(int questionId);
     boolean deleteALLAnswer();
 }
