@@ -1,32 +1,57 @@
-# Stackoverflow TW Project
+# Stack Overflow 2.0 Documentation
 
-- Main page listing all questions with details, date and answer count
-- Feature to sort questions on Main page by alphabet, date or answer count
-- Detail page of a question shows who asked it and lists all answers with date and users
-- Feature to add new question (redirects to question detail page after save)
-- Feature to add new answer (location: question detail page)
-- Feature to delete question (later extend so only the owner can delete it)
-- Feature to delete answer (location: question delete page) (later extend so only the owner can delete it)
-- Feature to Register new user
-- Feature to Login with user and store session (who is currently logged in is always visible on frontend)
-- Feature to Logout user
-- Users list page: shows username, registration date, number of questions, number of answers
-- Feature to mark the accepted answer for the user's own question
-- Write tests for the service layer
+- [Introduction](#introduction)
+- [Technologies Used](#technologies-used)
+- [System Architecture](#system-architecture)
+- [Database Design](#database-design)
+- [Getting Started](#getting-started)
 
-#### Extra:
-- OPTIONAL: Admin user type can delete any question or answer
-- OPTIONAL: Filter by question titles  (location: main page)
-- OPTIONAL: Feature to tag questions
-- OPTIONAL: Feature to edit questions (limited to the ones created by the user)
-- OPTIONAL: Feature to edit answers (limited to the ones created by the user)
-- OPTIONAL: Feature to calculate reputation of the user and display them differently if they are very active on the site (display reputation on user list page too)
+## Introduction
+Welcome to  Stack Overflow 2.0. This question-and-answer website aims to serve as a minimalistic alternative to the original website. The main page lists all questions with details and answers. Users are able to create, read, delete and update  their questions and  answers. Main emphasis of this project was to use and practice SOLID, OOP and Clean Code principles within the Java Spring Boot framework.
 
-## General requirements: 
-- Create an SQL database to store your data
-- Stick to Model View Controller layers (Frontend doesn't do calculations, only displays the data, SQL handles the data manipulation)
-- Do the base data features first and add user management later, extend already existing ones if necessary 
-- Aim for the code to keep SOLID, OOP and Clean code principles
-- Focus on the Java & SQL parts and do minimal frontend as it is not the goal of this project
-- Vanilla Javascript and HTML is suggested for frontend, nothing more complicated (like frameworks) is necessary 
-- If you need new API endpoints ask mentors to create them for you
+## Technologies Used
+- **Java Spring Boot Framework**
+- **React**
+- **Postgres**
+
+## System Architecture
+Repository contains both the Front and Backend part of the application and its  using Model View Controller layers.
+
+![Alt Text](images/stackoverflow.png)
+
+Flowchart  above demonstrates how data is handled and navigated from the database to the Frontend. Requests from the frontend also use the same logic just backwards. Moreover Frontend doesn't do calculations, only displays the data, SQL handles the data manipulation. 
+
+- QuestionDAOJDBC is directly connected to the Postgres Database.
+
+- QuestionDAO  serves as a crucial abstraction layer bridging the gap between the low-level data access operations implemented in QuestionDAOJDBC and the higher-level business logic encapsulated in QuestionService
+
+- QuestionService:positioned between QuestionDAO and QuestionController, orchestrates question-related operations and ensures coordinated data flow between the Frontend and Backend.
+
+- QuestionController: handles HTTP requests related to questions.
+It is responsible for coordinating the flow of data between the frontend and the backend for question-related operations.
+
+
+## Database Design
+ Postgresql is responsible for storing and handling  and manipulating  questions and answers by using two tables.
+
+Questions Schema contains five columns : 
+- question_id
+- user_id 
+- question_title
+- question_description 
+- question_date
+
+ Similarly Answers Schema  contains five columns:
+- answer_id
+- user_id 
+- answer_title
+- answer_description 
+- answer_date
+- 
+## Getting Started
+
+1. Clone this repository to your local machine.
+2. Install the necessary dependencies for both the frontend and backend.
+3. Set up your Postgres database and configure the connection.
+4. Initiate the backend by running the StackoverflowTwApplication (SpringBootApplication).
+5. You can start frontend in the ui folder using npm start 
