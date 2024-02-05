@@ -47,7 +47,7 @@ Questions Schema contains five columns :
 - answer_title
 - answer_description 
 - answer_date
-- 
+  
 ## Getting Started
 
 1. Clone this repository to your local machine.
