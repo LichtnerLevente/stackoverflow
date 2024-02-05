@@ -1,4 +1,4 @@
-# Stack Overflow 2.0 Documentation
+# Stack Overflow 2.0 Table of Content
 
 - [Introduction](#introduction)
 - [Technologies Used](#technologies-used)
