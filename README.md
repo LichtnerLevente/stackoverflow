@@ -51,7 +51,16 @@ Questions Schema contains five columns :
 ## Getting Started
 
 1. Clone this repository to your local machine.
-2. Install the necessary dependencies for both the frontend and backend.
-3. Set up your Postgres database and configure the connection.
-4. Initiate the backend by running the StackoverflowTwApplication (SpringBootApplication).
-5. You can start frontend in the ui folder using npm start 
+   ```sh
+   git clone https://github.com/github_username/stackoverflow.git
+   ```
+3. Install the necessary dependencies for both the frontend and backend.
+     ```sh
+   npm install
+   ```
+4. Set up your Postgres database and configure the connection.
+5. Initiate the backend by running the StackoverflowTwApplication (SpringBootApplication).
+6. You can start frontend in the ui folder using:
+     ```sh
+   npm start
+   ```
